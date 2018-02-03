@@ -53,11 +53,22 @@
             margin-top: 0px;
             margin-bottom: 15px;
         }
+        
+        .form-control {
+            color: #fff !important;
+        }
+
         .input-control {
             width: 100px !important;
             display: inline;
             color: #fff !important;
             text-align: right;
+            padding-bottom: 0px;
+        }
+        .input-text-control {
+            width: 200px !important;
+            display: inline;
+            color: #fff !important;
             padding-bottom: 0px;
         }
         .inline-button {
@@ -79,36 +90,6 @@
 <body>
 
     <header>
-        
-        <!--
-
-            Как я себе вижу:
-черный фон
-карты (сбер/альфа/тинькофф) - стрелочка (влево/вправо: направление перевода) - крипты (BTC/ETH)
-input box для фиат - input box для crypto
-label - Exchange Rate (берется с bitfinex через их API) + комиссия 2%
-кнопка - обменять
-
-ниже список по последним произведенным операциям обмена
-
-При нажатии на кнопку открывается popup, в нем зафиксирован курс, суммы
-нужно ввести:
-- email
-- телефон
-- имя
-- input box получателя: для покупки crypto - номер/hash кошелька, для покупки фиат - номер карты
-- label-поле отправителя: (с возможностью copy/paste - можно кнопку рядом):
-номер карты на которую перечислить рубли для покупки крипты (поле нужно скрывать по дефолту и показывать только по какому нибудь пользовательскому событию - типа кнопки Показать)
-или hash/QR code если производится покупка фиат(рублей)
-- галочка, что Согласен с условиями
-кнопка ОК/Обменять
-
-Пользователь региструется в бд по email/телефону (без подтверждения)
-Нотификации о статусе операции отправляются на email
-вход в личный кабинет осуществляется по временной ссылке, высылаемой каждый раз на email (+ токены сессии на какое то время)
-
-было бы круто прикрутить telegram
-        -->
 
         <!--Intro Section-->
         <section class="view intro-1 hm-black-strong">
@@ -120,7 +101,8 @@ label - Exchange Rate (берется с bitfinex через их API) + ком�
                         <li>
                             <p class="lead mt-4 mb-5 wow fadeInDown">
                                 <div class="md-form">
-                                    <input type="text" class="form-control input-control input-numeral" value="43653" />
+                                    Меняю 
+                                    <input type="text" name="amount" id="amount" class="form-control input-control input-numeral" value="43653" />
                                     <span>
                                         <span class="inline-button active">рублей</span>, 
                                         <span class="inline-button">биткойнов</span>, 
@@ -130,6 +112,10 @@ label - Exchange Rate (берется с bitfinex через их API) + ком�
                                         <span class="inline-button">эфиров</span> по курсу 
                                         <span>570 500.74 RUB</span>
                                     </span>
+                                    <br />
+                                    Мой email
+                                    <input type="email" name="email" class="form-control input-text-control validate"> и биткойн-кошелёк
+                                    <input type="text" name="wallet" class="form-control input-text-control validate">
                                 </div>
                             </p>
                         </li>
@@ -143,7 +129,6 @@ label - Exchange Rate (берется с bitfinex через их API) + ком�
                             <i class="fa fa-cc-mastercard fa-2x" aria-hidden="true"></i>
                         </li>
                     </ul>
-                </div>
             </div>
         </section>
 
@@ -167,9 +152,6 @@ label - Exchange Rate (берется с bitfinex через их API) + ком�
 
     <script src="js/polyfill.min.js"></script>
     <script src="js/axios.min.js"></script>
-
-    <!-- Vue JS -->
-    <script src="js/vue.min.js"></script>
 
     <script>
     var DOM = {
@@ -224,6 +206,7 @@ label - Exchange Rate (берется с bitfinex через их API) + ком�
     </script>
     
     <script>
+        amount.focus();
         var inputNumeral = DOM.select('.input-numeral');
 
         var cleaveNumeral = new Cleave(inputNumeral, {
@@ -241,221 +224,44 @@ label - Exchange Rate (берется с bitfinex через их API) + ком�
             inputNumeral.focus();
         });
 
-        function init_map() {
-
-            var var_location = new google.maps.LatLng(55.7475153, 37.5388856);
-
-            var var_mapoptions = {
-                center: var_location,
-
-                zoom: 14
-            };
-
-            var var_marker = new google.maps.Marker({
-                position: var_location,
-                map: var_map,
-                title: "Башня Федерация"
-            });
-
-            var var_map = new google.maps.Map(document.getElementById("map-container"),
-                var_mapoptions);
-
-            var_marker.setMap(var_map);
-        }
     </script>
-
-    <!--Google Maps-->
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHqIbeYTm6ajARJo9FTHahbFqcy3WHTeA&callback=init_map"></script>
 
     <!-- Animations init-->
     <script>
         new WOW().init();
     </script>
 
-    <script>
-
-        function jsonToFormEncoded(data) {
-            var formBody = [];
-            for (var property in data) {
-            var encodedKey = encodeURIComponent(property);
-            var encodedValue = encodeURIComponent(data[property]);
-            formBody.push(encodedKey + "=" + encodedValue);
-            }
-            return formBody.join("&");
-        }
-
-        function getPeriodMessage() {
-            var period = $('input[name=options]:checked').val();
-            var time = $('#time').val();
-
-            if (period == 1)
-                return time + " " + units(time, {nom: 'день', gen: 'дня', plu: 'дней'});
-                        
-            if (period == 30)
-                return time + " " + units(time, {nom: 'месяц', gen: 'месяца', plu: 'месяцев'});
-
-            if (period== 365)
-                return time + " " + units(time, {nom: 'год', gen: 'года', plu: 'лет'});
-        }
-
-        function sendMail() {
-            var data = {
-                phone: $('#client_phone').val(),
-                name: $('#client_name').val(),
-                date: $('#client_date').val(),
-                message: 'Займ ' + $('#amount').val() + ' рублей на ' + getPeriodMessage() + ' с платежом: ' + $('#payment').val(),        
-            };
-            
-            const config = { headers: { 'Content-Type': ' application/x-www-form-urlencoded' } };
-            axios.post('send.php', jsonToFormEncoded(data), config)
-                .then(function (res) {
-                    alert('Спасибо !');
-                    phone: $('#client_phone').val('');
-                    name: $('#client_name').val('');
-                    date: $('#client_date').val('');
-                })
-                .catch(function() { 
-                    alert('Ошибка при отправке запроса. Попробуйте еще раз.')
-                });
-        }
-
-        /**
-        * Возвращает единицу измерения с правильным окончанием
-        * 
-        * @param {Number} num      Число
-        * @param {Object} cases    Варианты слова {nom: 'час', gen: 'часа', plu: 'часов'}
-        * @return {String}            
-        */
-        function units(num, cases) {
-            num = Math.abs(num);
-            
-            var word = '';
-            
-            if (num.toString().indexOf('.') > -1) {
-                word = cases.gen;
-            } else { 
-                word = (
-                    num % 10 == 1 && num % 100 != 11 
-                        ? cases.nom
-                        : num % 10 >= 2 && num % 10 <= 4 && (num % 100 < 10 || num % 100 >= 20) 
-                            ? cases.gen
-                            : cases.plu
-                );
-            }
-            
-            return word;
-        }
-
-        /*
-            50,000  200,000 500,000 1,000,000
-        14  730%    365%    183%    91%
-        30  365%    183%    91%     48%
-        90  183%    91%     48%     48%
-        180 91%     48%     48%     48%
-        365 48%     48%     48%     48%
-        */
-
-        var matrix = [];
-        matrix.push({ order: 100, amount: 50000, time: 14, percent: 730 });
-        matrix.push({ order: 101, amount: 50000, time: 30, percent: 365 });
-        matrix.push({ order: 102, amount: 50000, time: 90, percent: 183 });
-        matrix.push({ order: 103, amount: 50000, time: 180, percent: 91 });
-        matrix.push({ order: 104, amount: 50000, time: 365, percent: 48 });
-        matrix.push({ order: 104, amount: 50000, time: 1100, percent: 48 });
-
-        matrix.push({ order: 105, amount: 200000, time: 14, percent: 365 });
-        matrix.push({ order: 106, amount: 200000, time: 30, percent: 183 });
-        matrix.push({ order: 107, amount: 200000, time: 90, percent: 91 });
-        matrix.push({ order: 108, amount: 200000, time: 180, percent: 48 });
-        matrix.push({ order: 109, amount: 200000, time: 365, percent: 48 });
-        matrix.push({ order: 119, amount: 50000, time: 1100, percent: 48 });
-
-        matrix.push({ order: 110, amount: 500000, time: 14, percent: 183 });
-        matrix.push({ order: 111, amount: 500000, time: 30, percent: 91 });
-        matrix.push({ order: 112, amount: 500000, time: 90, percent: 48 });
-        matrix.push({ order: 113, amount: 500000, time: 180, percent: 48 });
-        matrix.push({ order: 114, amount: 500000, time: 365, percent: 48 });
-        matrix.push({ order: 119, amount: 500000, time: 1100, percent: 48 });
-
-        matrix.push({ order: 115, amount: 1000000, time: 14, percent: 91 });
-        matrix.push({ order: 116, amount: 1000000, time: 30, percent: 48 });
-        matrix.push({ order: 117, amount: 1000000, time: 90, percent: 48 });
-        matrix.push({ order: 118, amount: 1000000, time: 180, percent: 48 });
-        matrix.push({ order: 119, amount: 1000000, time: 1100, percent: 48 });
-
-        function getCalculatedAmount(amount, time)
-        {
-            var result = matrix.filter(function(x, idx) {
-                return x.amount >= amount && x.time >= time;
-            }); 
-            
-            var rate = result[0];
-            var dayRate = (rate.percent / 100) / 365;
-
-            var percentAmount = amount * dayRate * time;
-            var totalAmount = amount + percentAmount;
-            var amountByDay = totalAmount / time;
-            var amountByMonth = amountByDay * 30;
-
-            console.log('dayRate: ' + dayRate);
-            console.log('percentAmount: ' + percentAmount);
-            console.log('totalAmount: ' + totalAmount);
-            console.log('amountByDay: ' + amountByDay);
-            console.log('amountByMonth: ' + amountByMonth);
-
-            return { 
-                percentAmount: percentAmount,
-                totalAmount: totalAmount,
-                amountByDay: amountByDay,
-                amountByMonth: amountByMonth
-            };
-        }
-        
-        new Vue({
-            el: '#app',
-            data: {
-                amount: 100000,
-                time: 3,
-                period: 30,
-                day: 1,
-                month: 30,
-                year: 365,
-                min: 1,
-                max: 12
-            },
-            computed: {
-                payment: function () {
-                    var calculatedAmount = getCalculatedAmount(this.amount, this.time * this.period);
-                    if (this.time * this.period < this.month)
-                        return Math.round(calculatedAmount.totalAmount).toLocaleString('ru') + '₽'
-                    else
-                        return Math.round(calculatedAmount.amountByMonth).toLocaleString('ru') + '₽'
-                },
-                formattedAmount: function() {
-                    return this.amount.toLocaleString('ru') + '₽'
-                },
-                message: function () {
-                    if (this.time * this.period < this.month)
-                        return 'Итоговый платеж'
-                    else
-                        return 'Ежемесячный платеж'
-                },
-                messagePeriod: function() {
-                    if (this.period == this.day)
-                        return units(this.time, {nom: 'день', gen: 'дня', plu: 'дней'});
-                        
-                    if (this.period == this.month)
-                        return units(this.time, {nom: 'месяц', gen: 'месяца', plu: 'месяцев'});
-
-                    if (this.period == this.year)
-                        return units(this.time, {nom: 'год', gen: 'года', plu: 'лет'});
-                }
-            }
-        });
-
-    </script>
-
-
 </body>
 
 </html>
+
+
+        <!--
+
+            Как я себе вижу:
+черный фон
+карты (сбер/альфа/тинькофф) - стрелочка (влево/вправо: направление перевода) - крипты (BTC/ETH)
+input box для фиат - input box для crypto
+label - Exchange Rate (берется с bitfinex через их API) + комиссия 2%
+кнопка - обменять
+
+ниже список по последним произведенным операциям обмена
+
+При нажатии на кнопку открывается popup, в нем зафиксирован курс, суммы
+нужно ввести:
+- email
+- телефон
+- имя
+- input box получателя: для покупки crypto - номер/hash кошелька, для покупки фиат - номер карты
+- label-поле отправителя: (с возможностью copy/paste - можно кнопку рядом):
+номер карты на которую перечислить рубли для покупки крипты (поле нужно скрывать по дефолту и показывать только по какому нибудь пользовательскому событию - типа кнопки Показать)
+или hash/QR code если производится покупка фиат(рублей)
+- галочка, что Согласен с условиями
+кнопка ОК/Обменять
+
+Пользователь региструется в бд по email/телефону (без подтверждения)
+Нотификации о статусе операции отправляются на email
+вход в личный кабинет осуществляется по временной ссылке, высылаемой каждый раз на email (+ токены сессии на какое то время)
+
+было бы круто прикрутить telegram
+        -->
