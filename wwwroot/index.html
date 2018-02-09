@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en" class="full-height">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="CrypEx - Обменяй Биткойн за пять минут">
+
+    <title>CrypEx</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Material Design Bootstrap -->
+    <link href="css/mdb.min.css" rel="stylesheet">
+
+    <link rel="icon" type="image/png" href="img/icons/btc.png">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-110088177-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-110088177-1');
+    </script>
+    
+    <!-- Template styles -->
+    <style>
+        /* TEMPLATE STYLES */
+        .flex-center {
+            color: #fff;
+        }
+        .intro-1 {
+            background: url("img/photos/img.jpg")no-repeat center center;
+            background-size: cover;
+        }
+        .navbar .btn-group .dropdown-menu a:hover {
+            color: #000 !important;
+        }
+
+        .navbar .btn-group .dropdown-menu a:active {
+            color: #fff !important;
+        }
+
+        .divider-new {
+            margin-top: 0px;
+            margin-bottom: 15px;
+        }
+        
+        .input-control {
+            width: 100px !important;
+            display: inline;
+            color: #fff !important;
+            text-align: right;
+            padding-bottom: 0px;
+        }
+        .input-text-control {
+            width: 200px !important;
+            display: inline;
+            color: #fff !important;
+            padding-bottom: 0px;
+        }
+        .inline-button {
+            text-decoration: underline dotted;
+            cursor: pointer;
+        }
+        .inline-button:hover {
+            color:#ff4f5e !important;
+        }
+        .inline-button.active {
+            color:#ff3547 !important;
+            text-decoration: underline dotted;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <header>
+
+        <!--Intro Section-->
+        <section class="view intro-1 hm-black-strong">
+            <div class="full-bg-img flex-center">
+                <div class="container">
+                    <ul>
+                        <li>
+                            <h1 class="h1-responsive font-bold wow fadeInDown title" data-wow-delay="0.2s">Обменяй Биткойн за пять минут</h1></li>
+                        <li>
+                            <p class="lead mt-4 mb-5 wow fadeInDown">
+                                <div class="md-form">
+                                    <input type="text" name="amount" id="amount" class="form-control input-control input-numeral" value="" />
+                                    <span>
+                                        <span class="inline-button active">рублей</span>, 
+                                        <span class="inline-button">биткойнов</span>, 
+                                        <span class="inline-button">эфиров</span> на 
+                                        <span id="bitcoin">00.00</span>
+                                        <span class="inline-button active">биткойнов</span> по курсу 
+                                        <span id="rate">000.00</span> RUB
+                                    </span>
+                                </div>
+                            </p>
+                        </li>
+
+                        <!--
+                        <li>
+                            <button class="btn btn-lg btn-danger waves-effect waves-light" onclick="$('html,body').animate({ scrollTop: $('#ticket').offset().top - 150 }, 1000);">Обменять</button>
+                        </li>
+                        -->
+                        <li class="payment">
+                            <i class="fa fa-cc-visa fa-2x" aria-hidden="true"></i>
+                            <i class="fa fa-cc-mastercard fa-2x" aria-hidden="true"></i>
+                        </li>
+                    </ul>
+            </div>
+        </section>
+
+        <section>
+            
+        </section>
+
+    </header>
+
+    <div class="container">
+        <section class="text-center">
+
+            <div class="divider-new pt-3">
+                <h2 class="h2-responsive">Оформление заявки</h2>
+            </div>
+            
+            <div class="row text-center">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+
+                    <div class="md-form">
+                        <input type="email" id="orangeForm-name" class="form-control">
+                        <label for="orangeForm-name">Email</label>
+                    </div>
+
+                    <div class="md-form">
+                        <input type="text" id="orangeForm-email" class="form-control">
+                        <label for="orangeForm-email">Биткойн-кошелек</label>
+                    </div>
+
+                    <form class="form-inline">
+
+                        <label style="margin-right:10px;">Банк карты </label>
+
+                        <div class="form-group">
+                            <input name="name" type="radio" class="with-gap" id="radio1">
+                            <label for="radio1">Сбербанк</label>
+                        </div>
+                        <div class="form-group">
+                            <input name="name" type="radio" class="with-gap" id="radio2">
+                            <label for="radio2">Тинькофф</label>
+                        </div>
+                        <div class="form-group">
+                            <input name="name" type="radio" class="with-gap" id="radio3">
+                            <label for="radio3">Альфабанк</label>
+                        </div>
+
+                    </form>   
+
+                    <br />
+
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <input type="checkbox" id="checkbox1" style="margin-right:5px;">
+                            <label for="checkbox1">с условиями процедуры обмена ознакомлен и согласен</label>
+                        </div>
+                    </form>  
+
+                    <br />
+
+                    <div class="text-center">
+                        <button class="btn btn-deep-orange" onclick="approve.style.display='block'">Отправить заявку</button>
+                    </div>
+
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+
+        </section>
+        
+        <section id="approve" class="text-center" style="display:none;">
+
+            <div class="divider-new pt-3">
+                <h2 class="h2-responsive">Завершение оформления</h2>
+            </div>
+            
+            <div class="row text-center">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    
+                    <p>Заявка #0002 оформлена. Для завершения процедуры обмена необходимо перевести 12220$ на карту Тинькофф</p>
+
+                    
+                    <img class="img-fluid" src="http://www.privatbankrf.ru/images/qr_code_1.png"/>
+
+                    <p>По истечении 15 минут неоплаченная заявка аннулируется</p>
+
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+
+        </section>
+    </div>
+
+    <!--Footer-->
+    <footer class="page-footer center-on-small-only elegant-color-dark">
+
+            <!--Footer Links-->
+            <!--
+            <div class="container-fluid">
+                
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 ml-auto">
+                        <a class="title font-bold" href="#" onclick="$('html,body').animate({ scrollTop: $('#Intro').offset().top - 50 }, 1000);$('.collapse').collapse('hide')">СД ФИНАНС</a>
+    
+                        <ul>
+                            <li>123100, г. Москва, Пресненская наб., 12, Москва Сити, Башня "Федерация"</li>
+                            <li><a href="tel:+79773131770"> +7 977 31 31 770</a></li>
+                        </ul>
+                    </div>
+    
+                    <div class="col-lg-3 col-md-6 ml-auto">
+                    </div>
+    
+                    <div class="col-lg-3 col-md-6 ml-auto">
+                    </div>
+                </div>
+    
+            </div>
+            <!--/.Footer Links-->
+    
+            <hr>
+    
+            <!--Copyright-->
+            <div class="footer-copyright">
+                <div class="container-fluid">
+                    © 2018 <a href="http://CrypEx.space/">CrypEx</a>
+                </div>
+            </div>
+            <!--/.Copyright-->
+    
+        </footer>
+        <!--/.Footer-->
+        
+    <!-- SCRIPTS -->
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+
+    <!-- Bootstrap dropdown -->
+    <script type="text/javascript" src="js/popper.min.js"></script>
+
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="js/mdb.min.js"></script>
+
+    <script type="text/javascript" src="js/cleave.min.js"></script>
+
+    <script src="js/polyfill.min.js"></script>
+    <script src="js/axios.min.js"></script>
+
+    <script>
+    var DOM = {
+        offset: function (el) {
+            var rect = el.getBoundingClientRect();
+
+            return {
+                top:  rect.top + document.body.scrollTop,
+                left: rect.left + document.body.scrollLeft
+            };
+        },
+
+        select: function (selector) {
+            return document.querySelector(selector);
+        },
+
+        html: function (ele, html) {
+            if (!html) {
+                return ele.innerHTML;
+            }
+
+            ele.innerHTML = html;
+        },
+
+        selectAll: function (selector) {
+            return document.querySelectorAll(selector);
+        },
+
+        removeClass: function (el, className) {
+            if (el.classList) {
+                el.classList.remove(className);
+            } else {
+                el.className = el.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+            }
+        },
+
+        addClass: function (el, className) {
+            if (el.classList) {
+                if (className.indexOf(' ') >= 0) {
+                    var list = className.split(' ');
+                    _.each(list, function (element) {
+                        el.classList.add(element);
+                    });
+                } else {
+                    el.classList.add(className);
+                }
+            } else {
+                el.className += ' ' + className;
+            }
+        }
+    };
+    </script>
+    
+    <script>
+
+        $(document).ready(function() {
+
+            amount.focus();
+
+            var getUsd = $.get("rate/usd").then(function(data, status, xhr) { return data; });
+            var getBitcoin = $.get("rate/bitcoin").then(function(data, status, xhr) { return data; });
+            
+            $.when(getUsd, getBitcoin).done(function(usd, bitcoin) {
+                
+                $("#rate").attr("data", usd * bitcoin);
+                $("#rate").text((usd * bitcoin).toFixed(2));
+            });
+
+            $("#amount").on("keyup", function() {
+                var amount = this.value.replace(new RegExp(",", 'g'), "");
+                var rate = parseFloat($("#rate").attr("data"));
+                var bitcoin = amount / rate;
+                $("#bitcoin").html(bitcoin)
+
+                console.log("amount: " + amount);
+                console.log("rate: " + rate);
+                console.log("bitcoin: " + bitcoin);
+            });
+
+            var inputNumeral = DOM.select('.input-numeral');
+
+            var cleaveNumeral = new Cleave(inputNumeral, {
+                numeral: true
+            });
+
+            /*
+            selectNumeral.addEventListener('change', function () {
+                cleaveNumeral = new Cleave(inputNumeral, {
+                    numeral:                    true,
+                    numeralThousandsGroupStyle: this.value
+                });
+
+                DOM.html(selectNumeralCoverTitle, 'Style: ' + this.value);
+                DOM.html(codeNumeral, DOM.html(codeNumeral).replace(/(<span class="code-grouping-style">(wan|thousand|lakh)<\/span>)|(thousand)/g, '<span class="code-grouping-style">' + this.value + '</span>'));
+                inputNumeral.focus();
+            });*/
+        });
+
+    </script>
+
+    <!-- Animations init-->
+    <script>
+        new WOW().init();
+    </script>
+
+</body>
+
+</html>
+
+
+<!--
+Меняю 
+<input type="text" name="amount" id="amount" class="form-control input-control input-numeral" value="43653" />
+<span>
+<span class="inline-button active">рублей</span>, 
+<span class="inline-button">биткойнов</span>, 
+<span class="inline-button">эфиров</span> на 0.08211566
+<span class="inline-button">рублей</span>, 
+<span class="inline-button active">биткойнов</span>, 
+<span class="inline-button">эфиров</span> по курсу 
+<span>570 500.74 RUB</span>
+</span>
+<br />
+Мой email
+<input type="email" name="email" class="form-control input-text-control validate"> и биткойн-кошелёк
+<input type="text" name="wallet" class="form-control input-text-control validate">
+-->
+
+        <!--
+
+            Как я себе вижу:
+черный фон
+карты (сбер/альфа/тинькофф) - стрелочка (влево/вправо: направление перевода) - крипты (BTC/ETH)
+input box для фиат - input box для crypto
+label - Exchange Rate (берется с bitfinex через их API) + комиссия 2%
+кнопка - обменять
+
+ниже список по последним произведенным операциям обмена
+
+При нажатии на кнопку открывается popup, в нем зафиксирован курс, суммы
+нужно ввести:
+- email
+- телефон
+- имя
+- input box получателя: для покупки crypto - номер/hash кошелька, для покупки фиат - номер карты
+- label-поле отправителя: (с возможностью copy/paste - можно кнопку рядом):
+номер карты на которую перечислить рубли для покупки крипты (поле нужно скрывать по дефолту и показывать только по какому нибудь пользовательскому событию - типа кнопки Показать)
+или hash/QR code если производится покупка фиат(рублей)
+- галочка, что Согласен с условиями
+кнопка ОК/Обменять
+
+Пользователь региструется в бд по email/телефону (без подтверждения)
+Нотификации о статусе операции отправляются на email
+вход в личный кабинет осуществляется по временной ссылке, высылаемой каждый раз на email (+ токены сессии на какое то время)
+
+было бы круто прикрутить telegram
+        -->
