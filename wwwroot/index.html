@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="description" content="CrypEx - Обменяй Биткойн за пять минут">
+    <meta name="description" content="CrypEx - Обмен криптовалют">
 
     <title>CrypEx</title>
 
@@ -18,6 +18,9 @@
 
     <!-- Material Design Bootstrap -->
     <link href="css/mdb.min.css" rel="stylesheet">
+    
+    <!-- Custom styles -->
+    <link href="css/style.css" rel="stylesheet">
 
     <link rel="icon" type="image/png" href="img/icons/btc.png">
 
@@ -27,59 +30,8 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'UA-110088177-1');
     </script>
-    
-    <!-- Template styles -->
-    <style>
-        /* TEMPLATE STYLES */
-        .flex-center {
-            color: #fff;
-        }
-        .intro-1 {
-            background: url("img/photos/img.jpg")no-repeat center center;
-            background-size: cover;
-        }
-        .navbar .btn-group .dropdown-menu a:hover {
-            color: #000 !important;
-        }
-
-        .navbar .btn-group .dropdown-menu a:active {
-            color: #fff !important;
-        }
-
-        .divider-new {
-            margin-top: 0px;
-            margin-bottom: 15px;
-        }
-        
-        .input-control {
-            width: 100px !important;
-            display: inline;
-            color: #fff !important;
-            text-align: right;
-            padding-bottom: 0px;
-        }
-        .input-text-control {
-            width: 200px !important;
-            display: inline;
-            color: #fff !important;
-            padding-bottom: 0px;
-        }
-        .inline-button {
-            text-decoration: underline dotted;
-            cursor: pointer;
-        }
-        .inline-button:hover {
-            color:#ff4f5e !important;
-        }
-        .inline-button.active {
-            color:#ff3547 !important;
-            text-decoration: underline dotted;
-        }
-
-    </style>
 
 </head>
 
@@ -281,105 +233,7 @@
 
     <script src="js/polyfill.min.js"></script>
     <script src="js/axios.min.js"></script>
-
-    <script>
-    var DOM = {
-        offset: function (el) {
-            var rect = el.getBoundingClientRect();
-
-            return {
-                top:  rect.top + document.body.scrollTop,
-                left: rect.left + document.body.scrollLeft
-            };
-        },
-
-        select: function (selector) {
-            return document.querySelector(selector);
-        },
-
-        html: function (ele, html) {
-            if (!html) {
-                return ele.innerHTML;
-            }
-
-            ele.innerHTML = html;
-        },
-
-        selectAll: function (selector) {
-            return document.querySelectorAll(selector);
-        },
-
-        removeClass: function (el, className) {
-            if (el.classList) {
-                el.classList.remove(className);
-            } else {
-                el.className = el.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
-            }
-        },
-
-        addClass: function (el, className) {
-            if (el.classList) {
-                if (className.indexOf(' ') >= 0) {
-                    var list = className.split(' ');
-                    _.each(list, function (element) {
-                        el.classList.add(element);
-                    });
-                } else {
-                    el.classList.add(className);
-                }
-            } else {
-                el.className += ' ' + className;
-            }
-        }
-    };
-    </script>
-    
-    <script>
-
-        $(document).ready(function() {
-
-            amount.focus();
-
-            var getUsd = $.get("rate/usd").then(function(data, status, xhr) { return data; });
-            var getBitcoin = $.get("rate/bitcoin").then(function(data, status, xhr) { return data; });
-            
-            $.when(getUsd, getBitcoin).done(function(usd, bitcoin) {
-                
-                $("#rate").attr("data", usd * bitcoin);
-                $("#rate").text((usd * bitcoin).toFixed(2));
-            });
-
-            $("#amount").on("keyup", function() {
-                var amount = this.value.replace(new RegExp(",", 'g'), "");
-                var rate = parseFloat($("#rate").attr("data"));
-                var bitcoin = amount / rate;
-                $("#bitcoin").html(bitcoin)
-
-                console.log("amount: " + amount);
-                console.log("rate: " + rate);
-                console.log("bitcoin: " + bitcoin);
-            });
-
-            var inputNumeral = DOM.select('.input-numeral');
-
-            var cleaveNumeral = new Cleave(inputNumeral, {
-                numeral: true
-            });
-
-            /*
-            selectNumeral.addEventListener('change', function () {
-                cleaveNumeral = new Cleave(inputNumeral, {
-                    numeral:                    true,
-                    numeralThousandsGroupStyle: this.value
-                });
-
-                DOM.html(selectNumeralCoverTitle, 'Style: ' + this.value);
-                DOM.html(codeNumeral, DOM.html(codeNumeral).replace(/(<span class="code-grouping-style">(wan|thousand|lakh)<\/span>)|(thousand)/g, '<span class="code-grouping-style">' + this.value + '</span>'));
-                inputNumeral.focus();
-            });*/
-        });
-
-    </script>
+    <script src="js/app.js"></script>
 
     <!-- Animations init-->
     <script>
@@ -390,24 +244,6 @@
 
 </html>
 
-
-<!--
-Меняю 
-<input type="text" name="amount" id="amount" class="form-control input-control input-numeral" value="43653" />
-<span>
-<span class="inline-button active">рублей</span>, 
-<span class="inline-button">биткойнов</span>, 
-<span class="inline-button">эфиров</span> на 0.08211566
-<span class="inline-button">рублей</span>, 
-<span class="inline-button active">биткойнов</span>, 
-<span class="inline-button">эфиров</span> по курсу 
-<span>570 500.74 RUB</span>
-</span>
-<br />
-Мой email
-<input type="email" name="email" class="form-control input-text-control validate"> и биткойн-кошелёк
-<input type="text" name="wallet" class="form-control input-text-control validate">
--->
 
         <!--
 

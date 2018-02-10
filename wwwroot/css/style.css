@@ -1,1 +1,45 @@
 /* Your custom styles */
+.flex-center {
+    color: #fff;
+}
+.intro-1 {
+    background: url("../img/photos/img.jpg")no-repeat center center;
+    background-size: cover;
+}
+.navbar .btn-group .dropdown-menu a:hover {
+    color: #000 !important;
+}
+
+.navbar .btn-group .dropdown-menu a:active {
+    color: #fff !important;
+}
+
+.divider-new {
+    margin-top: 0px;
+    margin-bottom: 15px;
+}
+
+.input-control {
+    width: 100px !important;
+    display: inline;
+    color: #fff !important;
+    text-align: right;
+    padding-bottom: 0px;
+}
+.input-text-control {
+    width: 200px !important;
+    display: inline;
+    color: #fff !important;
+    padding-bottom: 0px;
+}
+.inline-button {
+    text-decoration: underline dotted;
+    cursor: pointer;
+}
+.inline-button:hover {
+    color:#ff4f5e !important;
+}
+.inline-button.active {
+    color:#ff3547 !important;
+    text-decoration: underline dotted;
+}
