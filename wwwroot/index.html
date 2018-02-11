@@ -98,13 +98,13 @@
                 <div class="col-md-6">
 
                     <div class="md-form">
-                        <input type="email" id="orangeForm-name" class="form-control">
-                        <label for="orangeForm-name">Email</label>
+                        <input type="email" id="email" name="email" class="form-control">
+                        <label for="email">Email</label>
                     </div>
 
                     <div class="md-form">
-                        <input type="text" id="orangeForm-email" class="form-control">
-                        <label for="orangeForm-email">Биткойн-кошелек</label>
+                        <input type="text" id="bitcointWalletNumber" name="bitcointWalletNumber" class="form-control">
+                        <label for="bitcointWalletNumber">Биткойн-кошелек</label>
                     </div>
 
                     <form class="form-inline">
@@ -112,15 +112,15 @@
                         <label style="margin-right:10px;">Банк карты </label>
 
                         <div class="form-group">
-                            <input name="name" type="radio" class="with-gap" id="radio1">
+                            <input name="bankName" type="radio" class="with-gap" value="sberbank" id="radio1">
                             <label for="radio1">Сбербанк</label>
                         </div>
                         <div class="form-group">
-                            <input name="name" type="radio" class="with-gap" id="radio2">
+                            <input name="bankName" type="radio" class="with-gap" value="tinkoff" id="radio2">
                             <label for="radio2">Тинькофф</label>
                         </div>
                         <div class="form-group">
-                            <input name="name" type="radio" class="with-gap" id="radio3">
+                            <input name="bankName" type="radio" class="with-gap" value="alfabank" id="radio3">
                             <label for="radio3">Альфабанк</label>
                         </div>
 
@@ -138,7 +138,7 @@
                     <br />
 
                     <div class="text-center">
-                        <button class="btn btn-deep-orange" onclick="approve.style.display='block'">Отправить заявку</button>
+                        <button id="createInvoice" class="btn btn-deep-orange" onclick="approve.style.display='block'">Отправить заявку</button>
                     </div>
 
                 </div>

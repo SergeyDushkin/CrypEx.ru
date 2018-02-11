@@ -72,6 +72,21 @@ $(document).ready(function() {
         console.log("bitcoin: " + bitcoin);
     });
 
+    $("#createInvoice").on("click", function() {
+
+        var amount = $("#amount").val().replace(new RegExp(",", 'g'), "");
+        var email = $("#email").val();
+        var bitcointWalletNumber = $("#bitcointWalletNumber").val();
+        var bankName = $('input[name=bankName]:checked').val();
+
+        var invoiceRequest = $.post("api/invoice", { Email: email, BitcointWalletNumber: bitcointWalletNumber, BankName: bankName, Amount: amount }).then(function(data, status, xhr) { return data; });
+        
+        $.when(invoiceRequest).done(function(invoice) {
+
+            console.log("amount: " + invoice);
+        });
+    });
+
     var inputNumeral = DOM.select('.input-numeral');
 
     var cleaveNumeral = new Cleave(inputNumeral, {
