@@ -79,7 +79,7 @@ namespace blockchain.rate.service.Controllers
         {
             var bitcoinRate = await bitcoinRateService.GetRateAsync();
             var currencyRate = await currencyRateService.GetRateAsync();
-            var rate = (bitcoinRate * currencyRate);
+            var rate = (bitcoinRate * currencyRate) * 1.02f;
             var bitcoinAmount = create.Amount / rate;
 
             var invoice = new Invoice

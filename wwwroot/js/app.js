@@ -57,8 +57,9 @@ $(document).ready(function() {
     
     $.when(getUsd, getBitcoin).done(function(usd, bitcoin) {
         
-        $("#rate").attr("data", usd * bitcoin);
-        $("#rate").text((usd * bitcoin).toFixed(2));
+        var rate = (usd * bitcoin) * 1.02;
+        $("#rate").attr("data",rate);
+        $("#rate").text((rate).toFixed(2));
     });
 
     $("#amount").on("keyup", function() {
