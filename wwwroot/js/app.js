@@ -84,6 +84,16 @@ $(document).ready(function() {
         $.when(invoiceRequest).done(function(invoice) {
 
             console.log("amount: " + invoice);
+
+            $("#invoiceNumber").html(invoice.number);
+            $("#rubAmount").html(Number(invoice.rubAmount).toLocaleString('en'));
+            $("#rubAmount2").html(Number(invoice.rubAmount).toLocaleString('en'));
+            $("#bitcoinAmount").html(Number(invoice.bitcoinAmount).toLocaleString('en'));
+            $("#invoiceRate").html(Number(invoice.rate).toLocaleString('en'));
+            $("#bankName").html(invoice.payment.bankName);
+
+            $("#approve").css("display","block");
+            
         });
     });
 

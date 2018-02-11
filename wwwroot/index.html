@@ -138,7 +138,7 @@
                     <br />
 
                     <div class="text-center">
-                        <button id="createInvoice" class="btn btn-deep-orange" onclick="approve.style.display='block'">Отправить заявку</button>
+                        <button id="createInvoice" class="btn btn-deep-orange">Отправить заявку</button>
                     </div>
 
                 </div>
@@ -157,9 +157,10 @@
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
                     
-                    <p>Заявка #0002 оформлена. Для завершения процедуры обмена необходимо перевести 12220$ на карту Тинькофф</p>
+                    <p>Заявка #<span id="invoiceNumber"></span> оформлена.</p>
+                    <p>Обмен <span id="rubAmount"></span>₽ на <span id="bitcoinAmount"></span>Ƀ по курсу <span id="invoiceRate"></span> BTC/RUB</p>
+                    <p>Для завершения процедуры обмена необходимо перевести <span id="rubAmount2"></span>₽ на карту <span id="bankName"></span></p>
 
-                    
                     <img class="img-fluid" src="http://www.privatbankrf.ru/images/qr_code_1.png"/>
 
                     <p>По истечении 15 минут неоплаченная заявка аннулируется</p>

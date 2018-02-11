@@ -50,6 +50,7 @@ namespace blockchain.rate.service.Controllers
         public string Email { get; set; }
         public string BitcointWalletNumber { get; set; }
         public PaymentInfo Payment { get; set; }
+        public float Rate { get; set; }
         public float BitcoinRate { get; set; }
         public float UsdRate { get; set; }
         public float RubAmount { get; set; }
@@ -78,7 +79,8 @@ namespace blockchain.rate.service.Controllers
         {
             var bitcoinRate = await bitcoinRateService.GetRateAsync();
             var currencyRate = await currencyRateService.GetRateAsync();
-            var bitcoinAmount = create.Amount / (bitcoinRate * currencyRate);
+            var rate = (bitcoinRate * currencyRate);
+            var bitcoinAmount = create.Amount / rate;
 
             var invoice = new Invoice
             {
@@ -86,6 +88,7 @@ namespace blockchain.rate.service.Controllers
                 Email = create.Email,
                 RubAmount = create.Amount,
                 BitcoinAmount = bitcoinAmount,
+                Rate = rate,
                 BitcoinRate = bitcoinRate,
                 UsdRate = currencyRate,
                 BitcointWalletNumber = create.BitcointWalletNumber,
