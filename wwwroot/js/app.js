@@ -66,7 +66,7 @@ $(document).ready(function() {
         var amount = this.value.replace(new RegExp(",", 'g'), "");
         var rate = parseFloat($("#rate").attr("data"));
         var bitcoin = amount / rate;
-        $("#bitcoin").html(bitcoin)
+        $("#bitcoin").html(Number(bitcoin).toLocaleString('en'));
 
         console.log("amount: " + amount);
         console.log("rate: " + rate);
