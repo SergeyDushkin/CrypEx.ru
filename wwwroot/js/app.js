@@ -104,6 +104,18 @@ $(document).ready(function() {
         numeral: true
     });
 
+    $("#toggleArrow").on("click", function() {
+        $("#toggleArrow").toggleClass('flip');
+    });
+
+    $("#selectAlfabank, #selectTinkoff, #selectSberbank").on("click", function() {
+        $(this).toggleClass('inactive-img');
+    });
+
+    $("#selectBtc, #selectEth").on("click", function() {
+        $(this).toggleClass('inactive-img');
+    });
+
     /*
     selectNumeral.addEventListener('change', function () {
         cleaveNumeral = new Cleave(inputNumeral, {
