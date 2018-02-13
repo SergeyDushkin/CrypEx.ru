@@ -50,6 +50,18 @@ var DOM = {
 
 $(document).ready(function() {
 
+    var invoice = {
+
+        bankName: 'alfabank',
+        blockchain: 'BTC',
+        type: 'RURBTC',
+
+    };
+
+    function refresh() {
+        
+    }
+
     amount.focus();
 
     var getUsd = $.get("rate/usd").then(function(data, status, xhr) { return data; });
@@ -108,12 +120,24 @@ $(document).ready(function() {
         $("#toggleArrow").toggleClass('flip');
     });
 
-    $("#selectAlfabank, #selectTinkoff, #selectSberbank").on("click", function() {
-        $(this).toggleClass('inactive-img');
+    $(".select-bank").on("click", function() {
+        $(".select-bank").addClass('inactive');
+        $(".select-bank").attr('data-select', false);
+
+        $(this).removeClass('inactive');
+        $(this).attr('data-select', true);
+
+        invoice.bankName = $(this).attr('name');
     });
 
-    $("#selectBtc, #selectEth").on("click", function() {
-        $(this).toggleClass('inactive-img');
+    $(".select-blockchain").on("click", function() {
+        $(".select-blockchain").addClass('inactive');
+        $(".select-blockchain").attr('data-select', false);
+
+        $(this).removeClass('inactive');
+        $(this).attr('data-select', true);
+
+        invoice.blockchain = $(this).attr('name');
     });
 
     /*
