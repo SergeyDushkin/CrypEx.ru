@@ -50,6 +50,27 @@ var DOM = {
 
 $(document).ready(function() {
 
+    var rate = {
+        btcrur: 0, 
+        ethrur: 0,
+        type: 'btcrur',
+        sellingCurrencyName: 'BTC',
+
+        getCurrentRate: function() {
+            
+            if (this.sellingCurrencyName == 'BTC')
+            {
+                return this.btcrur;
+            }
+
+            if (this.sellingCurrencyName == 'ETH')
+            {
+                return this.ethrur;
+            }
+
+        }
+    };
+
     var invoice = {
 
         bankName: 'alfabank',
@@ -59,30 +80,36 @@ $(document).ready(function() {
     };
 
     function refresh() {
-        
-    }
+
+        var currentRate = rate.getCurrentRate();
+
+        $("#rate").attr("data", currentRate);
+        $("#rate").text((currentRate).toFixed(2));
+
+        var amount = $("#amount").val().replace(new RegExp(",", 'g'), "");
+        var bitcoin = amount / currentRate;
+        $("#bitcoin").html(Number(bitcoin).toLocaleString('en'));
+        $("#sellingCurrencyName").html(rate.sellingCurrencyName);
+
+        console.log("amount: " + amount);
+        console.log("rate: " + currentRate);
+        console.log("bitcoin: " + bitcoin);
+    };
 
     amount.focus();
 
-    var getUsd = $.get("rate/usd").then(function(data, status, xhr) { return data; });
-    var getBitcoin = $.get("rate/bitcoin").then(function(data, status, xhr) { return data; });
-    
-    $.when(getUsd, getBitcoin).done(function(usd, bitcoin) {
+    var getRate = $.get("api/rate").then(function(data, status, xhr) { return data; });
+
+    $.when(getRate).done(function(data) {
         
-        var rate = (usd * bitcoin) * 1.02;
-        $("#rate").attr("data",rate);
-        $("#rate").text((rate).toFixed(2));
+        rate.btcrur = data.btcrur;
+        rate.ethrur = data.ethrur;
+        
+        refresh();
     });
 
     $("#amount").on("keyup", function() {
-        var amount = this.value.replace(new RegExp(",", 'g'), "");
-        var rate = parseFloat($("#rate").attr("data"));
-        var bitcoin = amount / rate;
-        $("#bitcoin").html(Number(bitcoin).toLocaleString('en'));
-
-        console.log("amount: " + amount);
-        console.log("rate: " + rate);
-        console.log("bitcoin: " + bitcoin);
+        refresh();
     });
 
     $("#createInvoice").on("click", function() {
@@ -137,7 +164,9 @@ $(document).ready(function() {
         $(this).removeClass('inactive');
         $(this).attr('data-select', true);
 
-        invoice.blockchain = $(this).attr('name');
+        rate.sellingCurrencyName = $(this).attr('name');
+
+        refresh();
     });
 
     /*
