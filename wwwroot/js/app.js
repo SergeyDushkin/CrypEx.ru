@@ -53,30 +53,44 @@ $(document).ready(function() {
     var rate = {
         btcrur: 0, 
         ethrur: 0,
+        rurbtc: 0, 
+        rureth: 0,
         type: 'btcrur',
+        blockchainName: 'BTC',
         sellingCurrencyName: 'BTC',
+        purchasingCurrencyName: 'RUB',
 
         getCurrentRate: function() {
             
-            if (this.sellingCurrencyName == 'BTC')
+            if (this.sellingCurrencyName == 'BTC' && this.purchasingCurrencyName == 'RUB')
             {
                 return this.btcrur;
             }
 
-            if (this.sellingCurrencyName == 'ETH')
+            if (this.sellingCurrencyName == 'ETH' && this.purchasingCurrencyName == 'RUB')
             {
                 return this.ethrur;
             }
 
+            if (this.sellingCurrencyName == 'RUB' && this.purchasingCurrencyName == 'BTC')
+            {
+                return this.rurbtc;
+            }
+
+            if (this.sellingCurrencyName == 'RUB' && this.purchasingCurrencyName == 'ETH')
+            {
+                return this.rureth;
+            }
+
+        },
+
+        toggle: function() {
+            var a = new String(this.sellingCurrencyName);
+            var b = new String(this.purchasingCurrencyName);
+
+            this.sellingCurrencyName = b;
+            this.purchasingCurrencyName = a;
         }
-    };
-
-    var invoice = {
-
-        bankName: 'alfabank',
-        blockchain: 'BTC',
-        type: 'RURBTC',
-
     };
 
     function refresh() {
@@ -84,12 +98,21 @@ $(document).ready(function() {
         var currentRate = rate.getCurrentRate();
 
         $("#rate").attr("data", currentRate);
-        $("#rate").text((currentRate).toFixed(2));
+        $("#rate").text((currentRate).toFixed(2).toLocaleString('en'));
 
         var amount = $("#amount").val().replace(new RegExp(",", 'g'), "");
-        var bitcoin = amount / currentRate;
+        var bitcoin = 0;
+        
+        if (rate.purchasingCurrencyName == 'RUB') {
+            bitcoin = amount / currentRate;
+        } else {
+            bitcoin = amount * currentRate;
+        }
+
         $("#bitcoin").html(Number(bitcoin).toLocaleString('en'));
         $("#sellingCurrencyName").html(rate.sellingCurrencyName);
+        $("#blockchainName").html(rate.blockchainName);
+        $("#purchasingCurrencyName").html(rate.purchasingCurrencyName);
 
         console.log("amount: " + amount);
         console.log("rate: " + currentRate);
@@ -104,6 +127,8 @@ $(document).ready(function() {
         
         rate.btcrur = data.btcrur;
         rate.ethrur = data.ethrur;
+        rate.rurbtc = data.btcrur;
+        rate.rureth = data.ethrur;
         
         refresh();
     });
@@ -145,6 +170,9 @@ $(document).ready(function() {
 
     $("#toggleArrow").on("click", function() {
         $("#toggleArrow").toggleClass('flip');
+        rate.toggle();
+
+        refresh();
     });
 
     $(".select-bank").on("click", function() {
@@ -165,6 +193,7 @@ $(document).ready(function() {
         $(this).attr('data-select', true);
 
         rate.sellingCurrencyName = $(this).attr('name');
+        rate.blockchainName = $(this).attr('name');
 
         refresh();
     });
