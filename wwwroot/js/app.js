@@ -1,5 +1,78 @@
+var RateService = function() {
+
+    return {
+        btcrur: 0, 
+        ethrur: 0,
+        rurbtc: 0, 
+        rureth: 0,
+        type: 'btcrur',
+        blockchainName: 'BTC',
+        sellingCurrencyName: 'BTC',
+        purchasingCurrencyName: 'RUB',
+        onRefresh: document.createEvent('Event'),
+
+        init: function() {
+
+            this.onRefresh.initEvent('refresh', true, true);
+
+            var getRate = $.get("api/rate").then(function(data, status, xhr) { return data; });
+            
+            $.when(getRate).done(function(data) {
+                                
+                this.btcrur = data.btcrur;
+                this.ethrur = data.ethrur;
+                this.rurbtc = data.btcrur;
+                this.rureth = data.ethrur;
+
+                document.dispatchEvent(this.onRefresh);
+                
+            }.bind(this));
+        },
+
+        getCurrentRate: function() {
+            
+            if (this.sellingCurrencyName == 'BTC' && this.purchasingCurrencyName == 'RUB')
+            {
+                return this.btcrur;
+            }
+
+            if (this.sellingCurrencyName == 'ETH' && this.purchasingCurrencyName == 'RUB')
+            {
+                return this.ethrur;
+            }
+
+            if (this.sellingCurrencyName == 'RUB' && this.purchasingCurrencyName == 'BTC')
+            {
+                return this.rurbtc;
+            }
+
+            if (this.sellingCurrencyName == 'RUB' && this.purchasingCurrencyName == 'ETH')
+            {
+                return this.rureth;
+            }
+
+        },
+
+        toggle: function() {
+            var a = new String(this.sellingCurrencyName);
+            var b = new String(this.purchasingCurrencyName);
+
+            this.sellingCurrencyName = b;
+            this.purchasingCurrencyName = a;
+        }
+    };
+}
+
 $(document).ready(function() {
 
+    var rate = new RateService();
+    rate.init();
+    
+    document.addEventListener('refresh', function(e) {
+        refresh();
+    });
+
+    /*
     var rate = {
         btcrur: 0, 
         ethrur: 0,
@@ -42,6 +115,7 @@ $(document).ready(function() {
             this.purchasingCurrencyName = a;
         }
     };
+    */
 
     function refresh() {
 
@@ -71,6 +145,7 @@ $(document).ready(function() {
 
     amount.focus();
 
+    /*
     var getRate = $.get("api/rate").then(function(data, status, xhr) { return data; });
 
     $.when(getRate).done(function(data) {
@@ -82,6 +157,7 @@ $(document).ready(function() {
         
         refresh();
     });
+    */
 
     $("#amount").on("keyup", function() {
         refresh();
