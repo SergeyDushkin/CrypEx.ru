@@ -1,3 +1,11 @@
+var Item = function() {
+
+    return {
+        name: '',
+        price: 0
+    };
+};
+
 var RateService = function() {
 
     return {

@@ -3,6 +3,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
+using MailChimp.Net;
+using MailChimp.Net.Interfaces;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,6 +34,8 @@ namespace blockchain.rate.service.Controllers
                 xs.Serialize(xml, invoice);
             }
 
+            //IMailChimpManager manager = new MailChimpManager("f235cd845b6d50846d5ff7c7adb001d7-us17");
+            
             return Ok(invoice);
         }
     }
