@@ -72,51 +72,6 @@ $(document).ready(function() {
         refresh();
     });
 
-    /*
-    var rate = {
-        btcrur: 0, 
-        ethrur: 0,
-        rurbtc: 0, 
-        rureth: 0,
-        type: 'btcrur',
-        blockchainName: 'BTC',
-        sellingCurrencyName: 'BTC',
-        purchasingCurrencyName: 'RUB',
-
-        getCurrentRate: function() {
-            
-            if (this.sellingCurrencyName == 'BTC' && this.purchasingCurrencyName == 'RUB')
-            {
-                return this.btcrur;
-            }
-
-            if (this.sellingCurrencyName == 'ETH' && this.purchasingCurrencyName == 'RUB')
-            {
-                return this.ethrur;
-            }
-
-            if (this.sellingCurrencyName == 'RUB' && this.purchasingCurrencyName == 'BTC')
-            {
-                return this.rurbtc;
-            }
-
-            if (this.sellingCurrencyName == 'RUB' && this.purchasingCurrencyName == 'ETH')
-            {
-                return this.rureth;
-            }
-
-        },
-
-        toggle: function() {
-            var a = new String(this.sellingCurrencyName);
-            var b = new String(this.purchasingCurrencyName);
-
-            this.sellingCurrencyName = b;
-            this.purchasingCurrencyName = a;
-        }
-    };
-    */
-
     function refresh() {
 
         var currentRate = rate.getCurrentRate();
@@ -144,20 +99,6 @@ $(document).ready(function() {
     };
 
     amount.focus();
-
-    /*
-    var getRate = $.get("api/rate").then(function(data, status, xhr) { return data; });
-
-    $.when(getRate).done(function(data) {
-        
-        rate.btcrur = data.btcrur;
-        rate.ethrur = data.ethrur;
-        rate.rurbtc = data.btcrur;
-        rate.rureth = data.ethrur;
-        
-        refresh();
-    });
-    */
 
     $("#amount").on("keyup", function() {
         refresh();
