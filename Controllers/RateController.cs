@@ -22,10 +22,12 @@ namespace blockchain.rate.service.Controllers
             var ethereumRate = await ethereumRateService.GetRateAsync();
             var currencyRate = await currencyRateService.GetRateAsync();
 
-            var btcrur = (bitcoinRate * currencyRate) * 1.02f;
-            var ethrur = (ethereumRate * currencyRate) * 1.02f;
+            var btcrur = (1f / (currencyRate * bitcoinRate)) * 1.02f;
+            var ethrur = (1f / (currencyRate * ethereumRate)) * 1.02f;
+            var rurbtc = (currencyRate * bitcoinRate) * 0.98f;
+            var rureth = (currencyRate * ethereumRate) * 0.98f;
 
-            return Ok(new { btcrur, ethrur });
+            return Ok(new { btcrur, ethrur, rurbtc, rureth });
         }
     }
 }

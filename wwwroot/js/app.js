@@ -9,14 +9,12 @@ var Item = function() {
 var RateService = function() {
 
     return {
-        btcrur: 0, 
-        ethrur: 0,
-        rurbtc: 0, 
-        rureth: 0,
-        type: 'btcrur',
-        blockchainName: 'BTC',
-        sellingCurrencyName: 'BTC',
-        purchasingCurrencyName: 'RUB',
+        btcrur: undefined, 
+        ethrur: undefined,
+        rurbtc: undefined, 
+        rureth: undefined,
+        item: 'btcrur',
+
         onRefresh: document.createEvent('Event'),
 
         init: function() {
@@ -27,86 +25,65 @@ var RateService = function() {
             
             $.when(getRate).done(function(data) {
                                 
-                this.btcrur = data.btcrur;
-                this.ethrur = data.ethrur;
-                this.rurbtc = data.btcrur;
-                this.rureth = data.ethrur;
+                this.btcrur = { sellingCurrencyName: 'BTC', purchasingCurrencyName: 'RUB', blockchainName: 'BTC', rate: data.btcrur };
+                this.ethrur = { sellingCurrencyName: 'ETH', purchasingCurrencyName: 'RUB', blockchainName: 'ETH', rate: data.ethrur };
+                this.rurbtc = { sellingCurrencyName: 'RUB', purchasingCurrencyName: 'BTC', blockchainName: 'BTC', rate: data.rurbtc };
+                this.rureth = { sellingCurrencyName: 'RUB', purchasingCurrencyName: 'ETH', blockchainName: 'ETH', rate: data.rureth };
 
                 document.dispatchEvent(this.onRefresh);
                 
             }.bind(this));
         },
 
-        getCurrentRate: function() {
-            
-            if (this.sellingCurrencyName == 'BTC' && this.purchasingCurrencyName == 'RUB')
-            {
-                return this.btcrur;
-            }
-
-            if (this.sellingCurrencyName == 'ETH' && this.purchasingCurrencyName == 'RUB')
-            {
-                return this.ethrur;
-            }
-
-            if (this.sellingCurrencyName == 'RUB' && this.purchasingCurrencyName == 'BTC')
-            {
-                return this.rurbtc;
-            }
-
-            if (this.sellingCurrencyName == 'RUB' && this.purchasingCurrencyName == 'ETH')
-            {
-                return this.rureth;
-            }
-
+        setItem: function(item) {
+            this.item = item;
+            document.dispatchEvent(this.onRefresh);
         },
 
-        toggle: function() {
-            var a = new String(this.sellingCurrencyName);
-            var b = new String(this.purchasingCurrencyName);
-
-            this.sellingCurrencyName = b;
-            this.purchasingCurrencyName = a;
+        getCurrentRate: function() {
+            return this[this.item];
         }
     };
 }
 
+var OrderService = function() {
+    return {
+        amount: 0
+    };
+};
+
 $(document).ready(function() {
 
     var rate = new RateService();
+    var order = new OrderService();
+    
     rate.init();
+    amount.focus();
     
     document.addEventListener('refresh', function(e) {
         refresh();
+    });
+
+    var cleaveNumeral = new Cleave(document.querySelector('.input-numeral'), {
+        numeral: true
     });
 
     function refresh() {
 
         var currentRate = rate.getCurrentRate();
 
-        $("#rate").attr("data", currentRate);
-        $("#rate").text((currentRate).toFixed(2).toLocaleString('en'));
+        $("#rate").attr("data", currentRate.rate);
+        $("#rate").text((currentRate.rate).toFixed(2).toLocaleString('en'));
 
         var amount = $("#amount").val().replace(new RegExp(",", 'g'), "");
-        var bitcoin = 0;
-        
-        if (rate.purchasingCurrencyName == 'RUB') {
-            bitcoin = amount / currentRate;
-        } else {
-            bitcoin = amount * currentRate;
-        }
+        var bitcoin =  amount * currentRate.rate;
 
         $("#bitcoin").html(Number(bitcoin).toLocaleString('en'));
-        $("#sellingCurrencyName").html(rate.sellingCurrencyName);
-        $("#blockchainName").html(rate.blockchainName);
-        $("#purchasingCurrencyName").html(rate.purchasingCurrencyName);
-
-        console.log("amount: " + amount);
-        console.log("rate: " + currentRate);
-        console.log("bitcoin: " + bitcoin);
+        $("#sellingCurrencyName").html(currentRate.sellingCurrencyName);
+        $("#blockchainName").html(currentRate.blockchainName);
+        $("#purchasingCurrencyName").html(currentRate.purchasingCurrencyName);
     };
 
-    amount.focus();
 
     $("#amount").on("keyup", function() {
         refresh();
@@ -137,17 +114,16 @@ $(document).ready(function() {
         });
     });
 
-    var inputNumeral = DOM.select('.input-numeral');
-
-    var cleaveNumeral = new Cleave(inputNumeral, {
-        numeral: true
-    });
 
     $("#toggleArrow").on("click", function() {
         $("#toggleArrow").toggleClass('flip');
-        rate.toggle();
 
-        refresh();
+        var a = $("#toggleArrow").attr("data-select");
+        var b = a == "data-item-1" ? "data-item-2" : "data-item-1";
+
+        $("#toggleArrow").attr("data-select", b);
+        
+        selectItem();
     });
 
     $(".select-bank").on("click", function() {
@@ -156,8 +132,6 @@ $(document).ready(function() {
 
         $(this).removeClass('inactive');
         $(this).attr('data-select', true);
-
-        invoice.bankName = $(this).attr('name');
     });
 
     $(".select-blockchain").on("click", function() {
@@ -166,22 +140,15 @@ $(document).ready(function() {
 
         $(this).removeClass('inactive');
         $(this).attr('data-select', true);
-
-        rate.sellingCurrencyName = $(this).attr('name');
-        rate.blockchainName = $(this).attr('name');
-
-        refresh();
+        
+        selectItem();
     });
 
-    /*
-    selectNumeral.addEventListener('change', function () {
-        cleaveNumeral = new Cleave(inputNumeral, {
-            numeral:                    true,
-            numeralThousandsGroupStyle: this.value
-        });
+    function selectItem() {
 
-        DOM.html(selectNumeralCoverTitle, 'Style: ' + this.value);
-        DOM.html(codeNumeral, DOM.html(codeNumeral).replace(/(<span class="code-grouping-style">(wan|thousand|lakh)<\/span>)|(thousand)/g, '<span class="code-grouping-style">' + this.value + '</span>'));
-        inputNumeral.focus();
-    });*/
+        var a = $("#toggleArrow").attr("data-select");
+        var b = $(".select-blockchain[data-select='true']").attr(a);
+
+        rate.setItem(b);
+    }
 });

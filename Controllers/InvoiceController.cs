@@ -36,7 +36,6 @@ namespace blockchain.rate.service.Controllers
                 xs.Serialize(xml, invoice);
             }
 
-
             var body = @"
 Здравствуйте Сергей
 
@@ -53,7 +52,12 @@ namespace blockchain.rate.service.Controllers
 Адрес отправителя: +7 925 878 8681
 
 Адрес получателя: %Phone vs CryptoAddress%
-Адрес получателя: 17XSs9yq5M9cRDU4XGtz45UTEcqMEdm6RF";
+Адрес получателя: 17XSs9yq5M9cRDU4XGtz45UTEcqMEdm6RF
+
+
+
+Crypto eXchange Space
+hi@cryptoX.space";
 
             var sender = new MailgunSender(
                 "sandbox2de279b82e6f443bbcc3e6cea7ebca3b.mailgun.org", // Mailgun Domain
@@ -69,9 +73,9 @@ namespace blockchain.rate.service.Controllers
             var subject = "cryptoX.space: Заявка #124 - Ожидает перевода";
 
             Email.DefaultSender = sender;
-            
+
             var email = Email
-                .From("leirbythe@gmail.com")
+                .From("hi@cryptoX.space")
                 .To(to)
                 .Subject(subject)
                 .Body(body);
