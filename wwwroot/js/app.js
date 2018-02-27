@@ -6,6 +6,27 @@ var Item = function() {
     };
 };
 
+var InvoiceService = function() {
+    return {
+        data: [],
+        onRefresh: document.createEvent('Event'),
+        
+        init: function() {
+
+            this.onRefresh.initEvent('invoicesLoaded', true, true);
+
+            var getRate = $.get("api/invoice").then(function(data, status, xhr) { return data; });
+            
+            $.when(getRate).done(function(data) {
+                                
+                this.data = data;
+                document.dispatchEvent(this.onRefresh);
+                
+            }.bind(this));
+        }
+    }
+}
+
 var RateService = function() {
 
     return {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -60,7 +61,7 @@ Crypto eXchange Space
 hi@cryptoX.space";
 
             var sender = new MailgunSender(
-                "sandbox2de279b82e6f443bbcc3e6cea7ebca3b.mailgun.org", // Mailgun Domain
+                "cryptox.space", // Mailgun Domain
                 "key-f942a01bbc9473142f4c8dace3c34f78" // Mailgun API Key
             );
 
@@ -73,7 +74,7 @@ hi@cryptoX.space";
             var subject = "cryptoX.space: Заявка #124 - Ожидает перевода";
 
             Email.DefaultSender = sender;
-            
+
             var email = Email
                 .From("leirbythe@gmail.com") //hi@cryptoX.space
                 .To(to)
@@ -83,6 +84,37 @@ hi@cryptoX.space";
             var response = await email.SendAsync();
 
             return Ok(invoice);
+        }
+
+        
+        [HttpGet]
+        public ActionResult Get()
+        {
+            var path = System.IO.Path.Combine(_hostingEnvironment.WebRootPath, "data");
+
+            var files = System.IO.Directory.GetFiles(path, "*.xml");
+            var invoices = files.Select(f => {
+                using (var stream = new System.IO.StreamReader(f))
+                {
+                    XmlSerializer xs = new XmlSerializer(typeof(Invoice));
+                    return (Invoice)xs.Deserialize(stream);
+                }
+            }).ToList();
+            
+            return Ok(invoices);
+        }
+
+        
+        [HttpGet("{id}")]
+        public ActionResult Get(string id)
+        {
+            var path = System.IO.Path.Combine(_hostingEnvironment.WebRootPath, "data", id + ".xml");
+
+            using (var stream = new System.IO.StreamReader(path))
+            {
+                XmlSerializer xs = new XmlSerializer(typeof(Invoice));
+                return Ok((Invoice)xs.Deserialize(stream));
+            }
         }
     }
 
