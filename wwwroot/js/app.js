@@ -96,7 +96,7 @@ $(document).ready(function() {
         var bitcointWalletNumber = $("#bitcointWalletNumber").val();
         var bankName = $('input[name=bankName]:checked').val();
 
-        var invoiceRequest = $.post("api/invoice", { Email: email, BitcointWalletNumber: bitcointWalletNumber, BankName: bankName, Item: itemName, Quantity: quantity }).then(function(data, status, xhr) { return data; });
+        var invoiceRequest = $.post("api/invoice", { Email: email, BitcointWalletNumber: bitcointWalletNumber, BankName: bankName, Item: rate.item, Quantity: quantity }).then(function(data, status, xhr) { return data; });
         
         $.when(invoiceRequest).done(function(invoice) {
 
