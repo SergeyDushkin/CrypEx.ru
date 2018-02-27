@@ -91,12 +91,12 @@ $(document).ready(function() {
 
     $("#createInvoice").on("click", function() {
 
-        var amount = $("#amount").val().replace(new RegExp(",", 'g'), "");
+        var quantity = $("#amount").val().replace(new RegExp(",", 'g'), "");
         var email = $("#email").val();
         var bitcointWalletNumber = $("#bitcointWalletNumber").val();
         var bankName = $('input[name=bankName]:checked').val();
 
-        var invoiceRequest = $.post("api/invoice", { Email: email, BitcointWalletNumber: bitcointWalletNumber, BankName: bankName, Amount: amount }).then(function(data, status, xhr) { return data; });
+        var invoiceRequest = $.post("api/invoice", { Email: email, BitcointWalletNumber: bitcointWalletNumber, BankName: bankName, Item: itemName, Quantity: quantity }).then(function(data, status, xhr) { return data; });
         
         $.when(invoiceRequest).done(function(invoice) {
 

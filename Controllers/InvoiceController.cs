@@ -25,7 +25,7 @@ namespace blockchain.rate.service.Controllers
         [HttpPost]
         public async Task<ActionResult> Post(CreateInvice create)
         {
-            var service = new InvoiceService(new BitcoinRateService(), new CurrencyRateService());
+            var service = new InvoiceService(new BitcoinRateService(), new EthereumRateService(), new CurrencyRateService());
             var invoice = await service.CreateAsync(create);
 
             var path = System.IO.Path.Combine(_hostingEnvironment.WebRootPath, "data", invoice.Number + ".xml");
@@ -75,7 +75,7 @@ hi@cryptoX.space";
             Email.DefaultSender = sender;
 
             var email = Email
-                .From("hi@cryptoX.space")
+                .From("leirbythe@gmail.com") //hi@cryptoX.space
                 .To(to)
                 .Subject(subject)
                 .Body(body);
@@ -91,7 +91,8 @@ hi@cryptoX.space";
         public string Email { get; set; }
         public string BitcointWalletNumber { get; set; }
         public string BankName { get; set; }
-        public float Amount { get; set; }
+        public string Item { get; set; }
+        public float Quantity { get; set; }
     }
 
     public class Invoice 
@@ -117,26 +118,51 @@ hi@cryptoX.space";
     public class InvoiceService
     {
         private readonly BitcoinRateService bitcoinRateService;
+        private readonly EthereumRateService ethereumRateService;
         private readonly CurrencyRateService currencyRateService;
 
-        public InvoiceService(BitcoinRateService bitcoinRateService, CurrencyRateService currencyRateService)
+        public InvoiceService(BitcoinRateService bitcoinRateService, EthereumRateService ethereumRateService, CurrencyRateService currencyRateService)
         {
             this.bitcoinRateService = bitcoinRateService;
+            this.ethereumRateService = ethereumRateService;
             this.currencyRateService = currencyRateService;
         }
 
         public async Task<Invoice> CreateAsync(CreateInvice create)
         {
             var bitcoinRate = await bitcoinRateService.GetRateAsync();
+            var ethereumRate = await ethereumRateService.GetRateAsync();
             var currencyRate = await currencyRateService.GetRateAsync();
-            var rate = (bitcoinRate * currencyRate) * 1.02f;
-            var bitcoinAmount = create.Amount / rate;
+
+            var btcrur = (1f / (currencyRate * bitcoinRate)) * 1.02f;
+            var ethrur = (1f / (currencyRate * ethereumRate)) * 1.02f;
+            var rurbtc = (currencyRate * bitcoinRate) * 0.98f;
+            var rureth = (currencyRate * ethereumRate) * 0.98f;
+
+            var rate = 0f;
+
+            switch(create.Item) {
+                case "btcrur": 
+                    rate = btcrur; 
+                    break;
+                case "ethrur": 
+                    rate = ethrur; 
+                    break;
+                case "rurbtc": 
+                    rate = rurbtc; 
+                    break;
+                case "rureth": 
+                    rate = rureth; 
+                    break;
+            }
+
+            var bitcoinAmount = create.Quantity * rate;
 
             var invoice = new Invoice
             {
                 Number = DateTime.Now.ToString("yyyyMMddHHmmss"),
                 Email = create.Email,
-                RubAmount = create.Amount,
+                RubAmount = create.Quantity,
                 BitcoinAmount = bitcoinAmount,
                 Rate = rate,
                 BitcoinRate = bitcoinRate,
