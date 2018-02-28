@@ -16,6 +16,8 @@ namespace blockchain.rate.service
             {
                 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
+                //http://iss.moex.com/iss/engines/currency/markets/selt/boards/CNGD/securities/USD000000TOD.XML
+
                 var result = await client.GetAsync($"http://www.moex.com/export/derivatives/currency-rate.aspx?language=ru&currency=USD/RUB&moment_start={DateTime.Today.AddDays(-14).ToString("yyyy-MM-dd")}&moment_end={DateTime.Today.ToString("yyyy-MM-dd")}"); 
     
                 var stream = await result.Content.ReadAsStringAsync(); 
