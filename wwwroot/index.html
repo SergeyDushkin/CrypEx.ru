@@ -57,10 +57,13 @@
                                             <table style="height: 100px; width:100%;">
                                                     <tbody>
                                                         <tr>
-                                                            <td class="align-middle text-right">
+                                                            <td class="align-middle">
                                                                 <img class="item inactive select-bank" name="sberbank" data-select="false" src="img/photos/sberbank.png" />
+                                                                Сбербанк
                                                                 <img class="item inactive select-bank" name="tinkoff" data-select="false" src="img/photos/tinkoff.png" />
+                                                                Тинькофф
                                                                 <img class="item select-bank" name="alfabank" data-select="true" src="img/photos/alfabank.png" />
+                                                                Альфа-банк
                                                             </td>
 
                                                             <td class="align-middle">
@@ -72,8 +75,9 @@
                                                             </td>
 
                                                             <td class="align-middle">
-                                                                <img class="item select-blockchain" name="BTC" data-item-1="btcrur" data-item-2="rurbtc" data-select="true" src="img/photos/btc.png" />
+                                                                <img class="item select-blockchain" name="BTC" data-item-1="btcrur" data-item-2="rurbtc" data-select="true" src="img/photos/btc.png" />BTC
                                                                 <img class="item inactive select-blockchain" name="ETH" data-item-1="ethrur" data-item-2="rureth" data-select="false" src="img/photos/ether.png" />
+                                                                ETH
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -86,11 +90,11 @@
                                     <p>
                                         <input type="text" name="amount" id="amount" class="form-control input-control input-numeral" value="50000" />
                                         <span id="purchasingCurrencyName">RUB</span> =
-                                        <span id="bitcoin">00.00</span> <span id="sellingCurrencyName">BTC</span>
+                                        <span id="bitcoin">0.00000000</span> <span id="sellingCurrencyName">BTC</span>
                                     </p>
 
                                     <p>
-                                        <span id="blockchainName">BTC</span>/RUB <span id="rate">000.00</span><br/>
+                                        <span id="blockchainName">BTC</span>/RUB <span id="rate">0</span><br/>
                                         (bitfinex.com ММВБ + 2%)
                                     </p>
                                 </div>
@@ -102,10 +106,6 @@
                             <button class="btn btn-lg btn-danger waves-effect waves-light" onclick="$('html,body').animate({ scrollTop: $('#ticket').offset().top - 150 }, 1000);">Обменять</button>
                         </li>
                         -->
-                        <li class="payment">
-                            <i class="fa fa-cc-visa fa-2x" aria-hidden="true"></i>
-                            <i class="fa fa-cc-mastercard fa-2x" aria-hidden="true"></i>
-                        </li>
                     </ul>
             </div>
         </section>
@@ -130,13 +130,13 @@
 
                     <div class="md-form">
                         <input type="text" id="bitcointWalletNumber" name="bitcointWalletNumber" class="form-control">
-                        <label for="bitcointWalletNumber">Биткойн-кошелек</label>
+                        <label for="bitcointWalletNumber">Адрес кошелька</label>
                     </div>
                     
                     <form class="form-inline">
                         <div class="form-group">
                             <input type="checkbox" id="checkbox1" style="margin-right:5px;">
-                            <label for="checkbox1">с условиями процедуры обмена ознакомлен и согласен</label>
+                            <label for="checkbox1">С условиями обмена ознакомлен и согласен</label>
                         </div>
                     </form>  
 
