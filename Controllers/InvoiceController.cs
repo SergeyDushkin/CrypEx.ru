@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace blockchain.rate.service.Controllers
 {
-    [Route("api/invoice")]
     public class InvoiceController : Controller
     {
         private readonly IHostingEnvironment _hostingEnvironment;
@@ -23,6 +22,7 @@ namespace blockchain.rate.service.Controllers
             _hostingEnvironment = hostingEnvironment;
         }
         
+        [Route("api/invoice")]
         [HttpPost]
         public async Task<ActionResult> Post(CreateInvice create)
         {
@@ -86,7 +86,7 @@ hi@cryptoX.space";
             return Ok(invoice);
         }
 
-        
+        [Route("invoice")]
         [HttpGet]
         public ActionResult Get()
         {
@@ -101,11 +101,10 @@ hi@cryptoX.space";
                 }
             }).ToList();
             
-            return Ok(invoices);
+            return View("List", invoices);
         }
 
-        
-        [HttpGet("{id}")]
+        [HttpGet("api/invoice/{id}")]
         public ActionResult Get(string id)
         {
             var path = System.IO.Path.Combine(_hostingEnvironment.WebRootPath, "data", id + ".xml");
