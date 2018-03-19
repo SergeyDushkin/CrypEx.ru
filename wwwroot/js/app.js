@@ -135,6 +135,26 @@ $(document).ready(function() {
         });
     });
 
+    $("#acceptButton").on("change", function (el, data) {
+        allowSendButton();
+        //var hasNotInvalidInputs = !$("input[required]").hasClass('invalid');
+        //var isAccepted = el.target.checked;
+        //$("#1createInvoice").prop('disabled', !(hasNotInvalidInputs && isAccepted));
+    });
+
+    $("input[required]").on("change", function (el, data) {
+        allowSendButton();
+        //var hasNotInvalidInputs = !$("input[required]").hasClass('invalid');
+        //var isAccepted = el.target.checked;
+        //$("#1createInvoice").prop('disabled', !(hasNotInvalidInputs && isAccepted));
+    });
+
+    function allowSendButton() {
+        var hasNotInvalidInputs = !$("input[required]").hasClass('invalid');
+        var isAccepted = $("#acceptButton").is(':checked');
+
+        $("#createInvoice").prop('disabled', !(hasNotInvalidInputs && isAccepted));
+    }
 
     $("#toggleArrow").on("click", function() {
         $("#toggleArrow").toggleClass('flip');

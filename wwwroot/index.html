@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" class="full-height">
 
 <head>
@@ -124,18 +124,18 @@
                 <div class="col-md-6">
 
                     <div class="md-form">
-                        <input type="email" id="email" name="email" class="form-control">
+                        <input type="email" id="email" name="email" class="form-control validate" required>
                         <label for="email">Email</label>
                     </div>
 
                     <div class="md-form">
-                        <input type="text" id="bitcointWalletNumber" name="bitcointWalletNumber" class="form-control">
+                        <input type="text" id="bitcointWalletNumber" name="bitcointWalletNumber" class="form-control validate" required>
                         <label for="bitcointWalletNumber">Адрес кошелька</label>
                     </div>
                     
                     <form class="form-inline">
                         <div class="form-group">
-                            <input type="checkbox" id="checkbox1" style="margin-right:5px;">
+                            <input type="checkbox" id="acceptButton" name="acceptButton" style="margin-right:5px;" required>
                             <label for="checkbox1">С условиями обмена ознакомлен и согласен</label>
                         </div>
                     </form>  
@@ -143,7 +143,7 @@
                     <br />
 
                     <div class="text-center">
-                        <button id="createInvoice" class="btn btn-deep-orange">Отправить заявку</button>
+                        <button type="submit" id="createInvoice" class="btn btn-deep-orange" disabled="disabled">Отправить заявку</button>
                     </div>
 
                 </div>
