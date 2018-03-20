@@ -168,11 +168,13 @@ $(document).ready(function() {
     });
 
     $(".select-bank").on("click", function() {
-        $(".select-bank").addClass('inactive');
-        $(".select-bank").attr('data-select', false);
+        $(".select-bank img").addClass('inactive');
+        $(".select-bank img").attr('data-select', false);
+        $(".select-bank").css('color', '#fff');
 
-        $(this).removeClass('inactive');
-        $(this).attr('data-select', true);
+        $(this).find('img').removeClass('inactive');
+        $(this).find('img').attr('data-select', true);
+        $(this).css('color', 'red');
     });
 
     $(".select-blockchain").on("click", function() {
